@@ -52,6 +52,13 @@ defmodule Mssqlex.Protocol do
       {"UID", opts[:username] || System.get_env("MSSQL_UID")},
       {"PWD", opts[:password] || System.get_env("MSSQL_PWD")}
     ]
+
+    conn_opts =
+      case opts[:extra_params] do
+        nil -> conn_opts
+        extra_params -> conn_opts ++ extra_params
+      end
+      
     conn_str = Enum.reduce(conn_opts, "", fn {key, value}, acc ->
       acc <> "#{key}=#{value};" end)
 
