@@ -55,6 +55,8 @@ defmodule Mssqlex.Protocol do
     conn_str = Enum.reduce(conn_opts, "", fn {key, value}, acc ->
       acc <> "#{key}=#{value};" end)
 
+    IO.inspect(conn_str, label: "Connection String")
+
     case ODBC.start_link(conn_str, opts) do
       {:ok, pid} -> {:ok, %__MODULE__{
                         pid: pid,
